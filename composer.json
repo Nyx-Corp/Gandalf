@@ -1,0 +1,35 @@
+{
+    "name": "nyx-corp/gandalf",
+    "description": "Security component for Symfony applications (auth, tokens, rate limiting)",
+    "type": "library",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/rate-limiter": "^7.4",
+        "symfony/security-bundle": "^7.4",
+        "symfony/uid": "^7.4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gandalf\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gandalf\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": false,
+            "symfony/runtime": false
+        },
+        "sort-packages": true
+    }
+}
