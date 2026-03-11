@@ -4,7 +4,7 @@
 
 Composant de securite pour applications Symfony. Depend de [Cortex](https://github.com/Nyx-Corp/Cortex).
 
-**Stack** : PHP 8.5, Symfony 7.3
+**Stack** : PHP 8.5, Symfony 7.4
 
 ## Architecture
 
@@ -69,14 +69,9 @@ Gandalf depend de Cortex. Imports utilises :
 
 ## Integration
 
-Gandalf est embarque via `git subtree` dans les projets NyxCorp :
+Gandalf est embarque via `git subtree` dans les projets NyxCorp (`src/Lib/Gandalf/`).
 
-```bash
-# Depuis le projet hote
-make gandalf-push   # Push les modifications vers ce repo
-make gandalf-pull   # Pull les mises a jour depuis ce repo
-make gandalf-status # Affiche l'etat du subtree
-```
+Un hook `pre-push` synchronise automatiquement les modifications vers ce repo a chaque `git push origin`. Aucune commande manuelle necessaire.
 
 ### PHP
 
