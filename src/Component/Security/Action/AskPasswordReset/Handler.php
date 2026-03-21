@@ -36,6 +36,7 @@ class Handler implements ActionHandler
             ->with(account: $account)
             ->with(intention: 'reset_password')
             ->with(tokenHash: $tokenData['tokenHash'])
+            ->with(scopes: [])
             ->with(expiresAt: new \DateTimeImmutable('+1 hour'))
             ->with(createdAt: new \DateTimeImmutable())
             ->build();
