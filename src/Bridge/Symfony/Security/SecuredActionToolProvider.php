@@ -21,6 +21,7 @@ class SecuredActionToolProvider
         private readonly AccessMapInterface $accessMap,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly array $actionMetadata,
+        private readonly ?string $pathPrefix = null,
     ) {
     }
 
@@ -100,10 +101,12 @@ class SecuredActionToolProvider
             $model = strtolower($meta['model']);
             $action = strtolower($meta['action']);
 
+            $base = $this->pathPrefix ?? '/api/v1';
+
             return match ($action) {
-                'create' => sprintf('/api/v1/%s/%s', $domain, $model),
-                'update', 'archive' => sprintf('/api/v1/%s/%s/uuid', $domain, $model),
-                default => sprintf('/api/v1/%s/%s/uuid/%s', $domain, $model, $action),
+                'create' => sprintf('%s/%s/%s', $base, $domain, $model),
+                'update', 'archive' => sprintf('%s/%s/%s/uuid', $base, $domain, $model),
+                default => sprintf('%s/%s/%s/uuid/%s', $base, $domain, $model, $action),
             };
         }
 

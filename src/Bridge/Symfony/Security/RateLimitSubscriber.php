@@ -14,20 +14,25 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  * Applies rate limiting per route/context on kernel.request.
  *
  * Route limiters resolve by IP. API limiters resolve by user identifier (authenticated)
- * or IP (anonymous). Configuration is injected from the project via DI.
+ * or IP (anonymous). MCP limiters apply to /_mcp endpoint.
  *
- * This class lives in Cortex Bridge (future Gandalf) — the rules/config live in the project.
+ * When this subscriber is active, it replaces Cortex's fallback
+ * ApiRateLimitWarningSubscriber (tagged cortex.api.rate_limit_guard).
  */
 class RateLimitSubscriber implements EventSubscriberInterface
 {
     /**
      * @param array<string, RateLimiterFactory> $routeLimiters Route name → limiter factory
      * @param array<string, RateLimiterFactory> $apiLimiters   'authenticated'|'anonymous' → limiter factory
+     * @param array<string, RateLimiterFactory> $mcpLimiters   'authenticated' → limiter factory for MCP
+     * @param ?string                           $apiPathPrefix API path prefix (e.g. '/p'), defaults to '/api'
      */
     public function __construct(
         private readonly array $routeLimiters = [],
         private readonly array $apiLimiters = [],
         private readonly ?TokenStorageInterface $tokenStorage = null,
+        private readonly array $mcpLimiters = [],
+        private readonly ?string $apiPathPrefix = null,
     ) {
     }
 
@@ -54,14 +59,32 @@ class RateLimitSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $path = $request->getPathInfo();
+        $apiPrefix = $this->apiPathPrefix ?? '/api';
+
         // API limiting (by user or IP)
-        if ([] !== $this->apiLimiters && str_starts_with($request->getPathInfo(), '/api')) {
-            $userIdentifier = $this->resolveUserIdentifier();
-            if ($userIdentifier && isset($this->apiLimiters['authenticated'])) {
-                $this->consume($this->apiLimiters['authenticated'], $userIdentifier);
-            } elseif (isset($this->apiLimiters['anonymous'])) {
-                $this->consume($this->apiLimiters['anonymous'], $this->resolveIpKey($request));
-            }
+        if ([] !== $this->apiLimiters && str_starts_with($path, $apiPrefix)) {
+            $this->applyLimiters($this->apiLimiters, $request);
+
+            return;
+        }
+
+        // MCP limiting (by user or IP)
+        if ([] !== $this->mcpLimiters && str_starts_with($path, '/_mcp')) {
+            $this->applyLimiters($this->mcpLimiters, $request);
+        }
+    }
+
+    /**
+     * @param array<string, RateLimiterFactory> $limiters 'authenticated'|'anonymous' → factory
+     */
+    private function applyLimiters(array $limiters, Request $request): void
+    {
+        $userIdentifier = $this->resolveUserIdentifier();
+        if ($userIdentifier && isset($limiters['authenticated'])) {
+            $this->consume($limiters['authenticated'], $userIdentifier);
+        } elseif (isset($limiters['anonymous'])) {
+            $this->consume($limiters['anonymous'], $this->resolveIpKey($request));
         }
     }
 
