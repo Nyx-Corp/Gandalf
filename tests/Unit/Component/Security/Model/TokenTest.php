@@ -7,11 +7,10 @@ namespace Gandalf\Tests\Unit\Component\Security\Model;
 use Cortex\ValueObject\Email;
 use Gandalf\Component\Security\Model\Account;
 use Gandalf\Component\Security\Model\Token;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Gandalf\Component\Security\Model\Token
- */
+#[CoversClass(Token::class)]
 class TokenTest extends TestCase
 {
     private Account $account;

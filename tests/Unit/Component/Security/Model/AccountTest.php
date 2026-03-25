@@ -7,12 +7,11 @@ namespace Gandalf\Tests\Unit\Component\Security\Model;
 use Cortex\ValueObject\Email;
 use Cortex\ValueObject\HashedPassword;
 use Gandalf\Component\Security\Model\Account;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-/**
- * @covers \Gandalf\Component\Security\Model\Account
- */
+#[CoversClass(Account::class)]
 class AccountTest extends TestCase
 {
     // =======================================================================

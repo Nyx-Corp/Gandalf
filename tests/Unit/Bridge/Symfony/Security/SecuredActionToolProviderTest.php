@@ -6,13 +6,12 @@ namespace Gandalf\Tests\Unit\Bridge\Symfony\Security;
 
 use Cortex\Bridge\Symfony\Mcp\ActionToolProvider;
 use Gandalf\Bridge\Symfony\Security\SecuredActionToolProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\AccessMapInterface;
 
-/**
- * @covers \Gandalf\Bridge\Symfony\Security\SecuredActionToolProvider
- */
+#[CoversClass(SecuredActionToolProvider::class)]
 class SecuredActionToolProviderTest extends TestCase
 {
     private ActionToolProvider $inner;

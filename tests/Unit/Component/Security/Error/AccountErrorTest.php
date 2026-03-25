@@ -7,12 +7,11 @@ namespace Gandalf\Tests\Unit\Component\Security\Error;
 use Cortex\Component\Exception\DomainException;
 use Gandalf\Component\Security\Error\AccountError;
 use Gandalf\Component\Security\Error\AccountException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Gandalf\Component\Security\Error\AccountError
- * @covers \Gandalf\Component\Security\Error\AccountException
- */
+#[CoversClass(AccountError::class)]
+#[CoversClass(AccountException::class)]
 class AccountErrorTest extends TestCase
 {
     // =======================================================================

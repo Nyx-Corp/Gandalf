@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Gandalf\Tests\Unit\Component\Security\Hasher;
 
 use Gandalf\Component\Security\Hasher\TokenHasher;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Gandalf\Component\Security\Hasher\TokenHasher
- */
+#[CoversClass(TokenHasher::class)]
 class TokenHasherTest extends TestCase
 {
     private TokenHasher $hasher;
