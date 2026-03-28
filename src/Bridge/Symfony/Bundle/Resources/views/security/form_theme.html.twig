@@ -1,0 +1,21 @@
+{#
+    Gandalf — Form theme for authentication fields.
+
+    Use via {% use '@_gandalf/security/form_theme.html.twig' %}
+    Style the gandalf-field* CSS classes in your project's stylesheet.
+#}
+{% block form_row %}
+<div class="gandalf-field">
+    {{ form_label(form, '', { 'label_attr': { 'class': 'gandalf-field__label' }}) }}
+    <div class="gandalf-field__input">
+        {{ form_widget(form, { 'attr': form.vars.attr|merge({ 'class': 'gandalf-field__widget' }) }) }}
+        {{ form_errors(form) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block submit_row %}
+<div class="gandalf-field gandalf-field--submit">
+    {{ form_widget(form, { 'attr': { 'class': 'gandalf-field__submit' }}) }}
+</div>
+{% endblock %}

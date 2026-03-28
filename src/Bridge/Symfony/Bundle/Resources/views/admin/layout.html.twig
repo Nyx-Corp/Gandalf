@@ -1,0 +1,27 @@
+{#
+    Gandalf — Fallback admin layout.
+
+    The host project should configure gandalf.admin.layout to point
+    to its own admin base template instead of this minimal fallback.
+
+    Blocks:
+      title           — Page <title>
+      page_icon       — Icon next to page title
+      page_title      — Page heading
+      page_content    — Main content area
+#}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gandalf Admin{% endblock %}</title>
+</head>
+<body>
+    <main>
+        {% block page_icon '' %}
+        <h1>{% block page_title '' %}</h1>
+        {% block page_content '' %}
+    </main>
+</body>
+</html>

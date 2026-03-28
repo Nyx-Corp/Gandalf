@@ -1,0 +1,30 @@
+login.title: Authentication
+login.headline: Access your admin panel
+login.email_label: Email address
+login.password_label: Password
+login.submit: Sign in
+
+account.list.title: Accounts
+account.list.username: Email
+account.list.acl: Roles
+account.list.status: Status
+account.list.active: Active
+account.list.archived: Archived
+account.list.empty: No accounts
+account.edit.title: Edit permissions
+account.edit.acl: Assigned roles
+account.edit.save: Save
+account.edit.success.title: Permissions updated
+account.edit.success.message: Roles for {username} have been updated
+
+token.list.title: API Tokens
+token.list.label: Label
+token.list.intention: Type
+token.list.expires_at: Expires
+token.list.created_at: Created
+token.list.scopes: Scopes
+token.list.empty: No tokens
+token.revoke: Revoke
+token.revoke.confirm: Revoke this token?
+token.revoke.success.title: Token revoked
+token.revoke.success.message: The token has been revoked successfully

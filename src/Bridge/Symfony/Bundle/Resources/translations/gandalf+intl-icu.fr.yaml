@@ -1,0 +1,30 @@
+login.title: Authentification
+login.headline: Accédez à votre espace d'administration
+login.email_label: Adresse email
+login.password_label: Mot de passe
+login.submit: Se connecter
+
+account.list.title: Comptes
+account.list.username: Email
+account.list.acl: Rôles
+account.list.status: Statut
+account.list.active: Actif
+account.list.archived: Archivé
+account.list.empty: Aucun compte
+account.edit.title: Modifier les permissions
+account.edit.acl: Rôles attribués
+account.edit.save: Enregistrer
+account.edit.success.title: Permissions mises à jour
+account.edit.success.message: Les rôles de {username} ont été modifiés
+
+token.list.title: Tokens API
+token.list.label: Libellé
+token.list.intention: Type
+token.list.expires_at: Expiration
+token.list.created_at: Créé le
+token.list.scopes: Portées
+token.list.empty: Aucun token
+token.revoke: Révoquer
+token.revoke.confirm: Révoquer ce token ?
+token.revoke.success.title: Token révoqué
+token.revoke.success.message: Le token a été révoqué avec succès

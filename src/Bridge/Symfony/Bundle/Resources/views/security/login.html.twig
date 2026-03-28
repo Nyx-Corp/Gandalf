@@ -1,0 +1,24 @@
+{#
+    Gandalf — Login page.
+
+    Extends the auth layout and renders the LoginType form.
+    The host project extends THIS template to fill logo, splash, meta blocks.
+#}
+{% extends '@_gandalf/security/layout.html.twig' %}
+
+{% use '@_gandalf/security/form_theme.html.twig' %}
+{% form_theme form _self %}
+
+{% block page_title %}{{ 'login.title'|trans({}, 'gandalf') }}{% endblock %}
+{% block page_headline %}{{ 'login.headline'|trans({}, 'gandalf') }}{% endblock %}
+
+{% block main %}
+    {{ form_start(form, { 'attr': { 'class': 'gandalf-login-form' } }) }}
+        {% if error is defined and error %}
+            <div role="alert" class="gandalf-alert gandalf-alert--error">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

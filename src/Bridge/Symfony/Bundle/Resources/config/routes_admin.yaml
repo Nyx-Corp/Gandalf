@@ -1,0 +1,25 @@
+# Gandalf — Admin account management routes.
+# Import in your admin routes file:
+#   gandalf_admin:
+#       resource: '@GandalfBundle/Resources/config/routes_admin.yaml'
+
+gandalf_account_list:
+    path: /security/accounts
+    controller: Gandalf\Bridge\Symfony\Bundle\Controller\AccountListAction
+    methods: GET
+    options:
+        template: '@_gandalf/admin/account/index.html.twig'
+
+gandalf_account_edit:
+    path: /security/accounts/{uuid}/edit
+    controller: Gandalf\Bridge\Symfony\Bundle\Controller\AccountEditAction
+    methods: [GET, POST]
+    options:
+        template: '@_gandalf/admin/account/edit.html.twig'
+
+gandalf_token_list:
+    path: /security/accounts/{uuid}/tokens
+    controller: Gandalf\Bridge\Symfony\Bundle\Controller\TokenListAction
+    methods: [GET, POST]
+    options:
+        template: '@_gandalf/admin/token/index.html.twig'

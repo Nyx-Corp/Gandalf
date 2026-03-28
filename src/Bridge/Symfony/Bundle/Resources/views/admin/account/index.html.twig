@@ -1,0 +1,51 @@
+{#
+    Gandalf — Account list page.
+
+    Uses @_theme/layout/list.html.twig from Cortex for the table layout.
+    Extends the admin layout configured via gandalf.admin.layout.
+#}
+{% extends gandalf_admin_layout %}
+
+{% import '@_theme/components/breadcrumbs.html.twig' as breadcrumbs %}
+
+{% block title %}{{ 'account.list.title'|trans({}, 'gandalf') }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumbs.item('account.list.title'|trans({}, 'gandalf')) }}
+{% endblock %}
+
+{% block page_icon %}<i data-lucide="shield" class="size-6 text-primary"></i>{% endblock %}
+{% block page_title %}{{ 'account.list.title'|trans({}, 'gandalf') }}{% endblock %}
+
+{% block page_content %}
+    {% embed '@_theme/layout/list.html.twig' with { trans_default_domain: 'gandalf' } %}
+
+        {% block create_link '' %}
+        {% block export_button '' %}
+
+        {% block username_th %}{{ 'account.list.username'|trans({}, 'gandalf') }}{% endblock %}
+        {% block username_td %}
+            <span class="font-medium">{{ item.username }}</span>
+        {% endblock %}
+
+        {% block show_checkboxes %}0{% endblock %}
+
+        {% block row_actions %}
+            <div class="inline-flex items-center gap-1">
+                <a href="{{ path('gandalf_account_edit', { uuid: item.uuid }) }}"
+                   class="size-7 inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                   data-tooltip="{{ 'account.edit.title'|trans({}, 'gandalf') }}">
+                    <i data-lucide="pencil" class="size-4"></i>
+                </a>
+                <a href="{{ path('gandalf_token_list', { uuid: item.uuid }) }}"
+                   class="size-7 inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                   data-tooltip="{{ 'token.list.title'|trans({}, 'gandalf') }}">
+                    <i data-lucide="key" class="size-4"></i>
+                </a>
+            </div>
+        {% endblock %}
+
+        {% block empty_text %}{{ 'account.list.empty'|trans({}, 'gandalf') }}{% endblock %}
+
+    {% endembed %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{#
+    Gandalf — Account ACL edit page.
+
+    Displays a checkbox form for editing account roles.
+    Extends the admin layout configured via gandalf.admin.layout.
+#}
+{% extends gandalf_admin_layout %}
+
+{% import '@_theme/components/breadcrumbs.html.twig' as breadcrumbs %}
+
+{% use '@_theme/components/forms.html.twig' %}
+{% form_theme form _self %}
+
+{% block title %}{{ 'account.edit.title'|trans({}, 'gandalf') }} — {{ account.username }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumbs.item('account.list.title'|trans({}, 'gandalf'), path('gandalf_account_list')) }}
+    {{ breadcrumbs.item(account.username) }}
+{% endblock %}
+
+{% block page_icon %}<i data-lucide="shield" class="size-6 text-primary"></i>{% endblock %}
+{% block page_title %}{{ account.username }}{% endblock %}
+
+{% block page_content %}
+    {{ form_start(form, { 'attr': { 'class': 'flex flex-col gap-6' } }) }}
+
+        <div class="border border-border bg-card">
+            <div class="px-4 py-3 border-b border-border flex items-center gap-3">
+                <i data-lucide="shield-check" class="size-5 text-primary"></i>
+                <h2 class="font-medium">{{ 'account.edit.acl'|trans({}, 'gandalf') }}</h2>
+            </div>
+            <div class="p-4 flex flex-col gap-4">
+                {{ form_row(form.acl) }}
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <a href="{{ path('gandalf_token_list', { uuid: account.uuid }) }}"
+               class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <i data-lucide="key" class="size-4"></i>
+                {{ 'token.list.title'|trans({}, 'gandalf') }}
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="{{ path('gandalf_account_list') }}"
+                   class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <i data-lucide="undo-2" class="size-4"></i>
+                </a>
+                <button type="submit" class="inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors cursor-pointer">
+                    <i data-lucide="check" class="size-4"></i>
+                    {{ 'account.edit.save'|trans({}, 'gandalf') }}
+                </button>
+            </div>
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}

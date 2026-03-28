@@ -1,0 +1,19 @@
+# Gandalf — Admin authentication routes.
+# Import in your admin routes file:
+#   _gandalf_security:
+#       resource: '@GandalfBundle/Resources/config/routes_security.yaml'
+
+login_form:
+    path: /login
+    controller: Gandalf\Bridge\Symfony\Bundle\Controller\LoginController::login
+    methods: GET
+    options:
+        template: security/login.html.twig
+
+login_check:
+    path: /login/check
+    methods: POST
+
+logout:
+    path: /logout
+    methods: GET

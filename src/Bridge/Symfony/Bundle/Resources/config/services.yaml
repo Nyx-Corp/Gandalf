@@ -1,0 +1,38 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Bridge — Symfony adapters (authenticator, hasher, subscribers)
+    Gandalf\Bridge\Symfony\Security\:
+        resource: '../../../../../Bridge/Symfony/Security/'
+        exclude:
+            - '../../../../../Bridge/Symfony/Security/ApiTokenProviderInterface.php'
+            - '../../../../../Bridge/Symfony/Security/CorsSubscriber.php'
+            - '../../../../../Bridge/Symfony/Security/RateLimitedActionToolProvider.php'
+            - '../../../../../Bridge/Symfony/Security/SecuredActionToolProvider.php'
+
+    # Component — Domain services (hashers, factories, stores, action handlers)
+    Gandalf\Component\Security\:
+        resource: '../../../../../Component/Security/'
+        exclude:
+            - '../../../../../Component/Security/Model/'
+            - '../../../../../Component/Security/Error/'
+            - '../../../../../Component/Security/Action/*/Command.php'
+            - '../../../../../Component/Security/Action/*/Response.php'
+
+    # Bridge — Doctrine adapters (DBAL mappers)
+    Gandalf\Bridge\Doctrine\:
+        resource: '../../../../../Bridge/Doctrine/'
+
+    # Bundle — Controllers and Form types
+    Gandalf\Bridge\Symfony\Bundle\Controller\:
+        resource: '../../Controller/'
+        tags: ['controller.service_arguments']
+
+    Gandalf\Bridge\Symfony\Bundle\Form\:
+        resource: '../../Form/'
+
+    # Interface → Implementation alias
+    Gandalf\Component\Security\Hasher\PasswordHasherInterface:
+        alias: Gandalf\Bridge\Symfony\Security\SymfonyPasswordHasher

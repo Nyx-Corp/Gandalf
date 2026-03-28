@@ -1,0 +1,35 @@
+{#
+    Gandalf — Authentication page layout.
+
+    The host project extends this template and fills the blocks.
+    Style the gandalf-* CSS classes in your project's stylesheet.
+
+    Blocks:
+      meta        — <head> additions (vite entries, favicon)
+      logo        — Brand logo
+      page_title  — Heading text
+      page_headline — Sub-heading
+      main        — Form content
+      splash      — Right-side illustration
+      footer      — Footer content
+#}
+{% block meta '' %}
+
+<div class="gandalf-auth-layout">
+    <div class="gandalf-auth-form">
+        <div class="gandalf-auth-form__inner">
+            <div class="gandalf-auth-form__header">
+                {% block logo '' %}
+                <h2 class="gandalf-auth-form__title">{% block page_title '' %}</h2>
+                <p class="gandalf-auth-form__headline">{% block page_headline '' %}</p>
+            </div>
+            <div class="gandalf-auth-form__content">
+                {% block main '' %}
+            </div>
+            {% block footer '' %}
+        </div>
+    </div>
+    <div class="gandalf-auth-splash">
+        {% block splash '' %}
+    </div>
+</div>

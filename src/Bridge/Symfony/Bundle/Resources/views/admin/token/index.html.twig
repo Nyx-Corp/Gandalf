@@ -1,0 +1,95 @@
+{#
+    Gandalf — Token list page for a single account.
+
+    Displays tokens with revoke action.
+    Extends the admin layout configured via gandalf.admin.layout.
+#}
+{% extends gandalf_admin_layout %}
+
+{% import '@_theme/components/breadcrumbs.html.twig' as breadcrumbs %}
+
+{% block title %}{{ 'token.list.title'|trans({}, 'gandalf') }} — {{ account.username }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumbs.item('account.list.title'|trans({}, 'gandalf'), path('gandalf_account_list')) }}
+    {{ breadcrumbs.item(account.username, path('gandalf_account_edit', { uuid: account.uuid })) }}
+    {{ breadcrumbs.item('token.list.title'|trans({}, 'gandalf')) }}
+{% endblock %}
+
+{% block page_icon %}<i data-lucide="key" class="size-6 text-primary"></i>{% endblock %}
+{% block page_title %}{{ 'token.list.title'|trans({}, 'gandalf') }} — {{ account.username }}{% endblock %}
+
+{% block page_content %}
+    <div class="border border-border bg-card mt-4">
+        <table class="min-w-full text-sm text-left">
+            <thead class="bg-table-header font-heading">
+                <tr class="border-b border-border">
+                    <th class="px-4 py-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">{{ 'token.list.label'|trans({}, 'gandalf') }}</th>
+                    <th class="px-4 py-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">{{ 'token.list.intention'|trans({}, 'gandalf') }}</th>
+                    <th class="px-4 py-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">{{ 'token.list.expires_at'|trans({}, 'gandalf') }}</th>
+                    <th class="px-4 py-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">{{ 'token.list.scopes'|trans({}, 'gandalf') }}</th>
+                    <th class="px-4 py-1.5 w-24"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if tokens is empty %}
+                    <tr>
+                        <td colspan="5" class="px-4 py-12 text-center text-sm text-muted-foreground">
+                            <div class="flex flex-col items-center gap-3">
+                                <i data-lucide="key-round" class="size-12 text-muted-foreground"></i>
+                                {{ 'token.list.empty'|trans({}, 'gandalf') }}
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    {% for token in tokens %}
+                        {% set is_expired = token.isExpired() %}
+                        <tr class="{{ loop.index is odd ? 'bg-card' : 'bg-stripe' }} hover:bg-accent transition-colors {{ is_expired ? 'opacity-50' : '' }}">
+                            <td class="px-4 py-2 text-foreground">{{ token.label ?? '—' }}</td>
+                            <td class="px-4 py-2">
+                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                    {{ token.intention }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-2 text-muted-foreground">
+                                {% if is_expired %}
+                                    <span class="text-destructive">{{ token.expiresAt|date('d/m/Y H:i') }}</span>
+                                {% else %}
+                                    {{ token.expiresAt|date('d/m/Y H:i') }}
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 text-muted-foreground text-xs">
+                                {% if token.scopes %}
+                                    {{ token.scopes|join(', ') }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 text-right">
+                                {% if not is_expired %}
+                                    <form method="post" action="{{ path('gandalf_token_list', { uuid: account.uuid }) }}" class="inline"
+                                          onsubmit="return confirm('{{ 'token.revoke.confirm'|trans({}, 'gandalf') }}')">
+                                        <input type="hidden" name="revoke_token" value="{{ token.uuid }}">
+                                        <button type="submit"
+                                                class="inline-flex items-center gap-1 px-2 py-1 text-xs text-destructive hover:bg-destructive/10 transition-colors cursor-pointer">
+                                            <i data-lucide="ban" class="size-3"></i>
+                                            {{ 'token.revoke'|trans({}, 'gandalf') }}
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('gandalf_account_edit', { uuid: account.uuid }) }}"
+           class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <i data-lucide="undo-2" class="size-4"></i>
+            {{ account.username }}
+        </a>
+    </div>
+{% endblock %}
