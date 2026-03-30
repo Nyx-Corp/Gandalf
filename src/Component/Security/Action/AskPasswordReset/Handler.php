@@ -7,6 +7,7 @@ use Gandalf\Component\Security\Factory\AccountFactory;
 use Gandalf\Component\Security\Factory\TokenFactory;
 use Gandalf\Component\Security\Hasher\TokenHasher;
 use Gandalf\Component\Security\Persistence\TokenStore;
+use Symfony\Component\Clock\ClockInterface;
 
 class Handler implements ActionHandler
 {
@@ -15,6 +16,7 @@ class Handler implements ActionHandler
         private readonly TokenFactory $tokenFactory,
         private readonly TokenStore $tokenStore,
         private readonly TokenHasher $tokenHasher,
+        private readonly ClockInterface $clock,
     ) {
     }
 
@@ -37,8 +39,8 @@ class Handler implements ActionHandler
             ->with(intention: 'reset_password')
             ->with(tokenHash: $tokenData['tokenHash'])
             ->with(scopes: [])
-            ->with(expiresAt: new \DateTimeImmutable('+1 hour'))
-            ->with(createdAt: new \DateTimeImmutable())
+            ->with(expiresAt: $this->clock->now()->modify('+1 hour'))
+            ->with(createdAt: $this->clock->now())
             ->build();
 
         $this->tokenStore->sync($token);

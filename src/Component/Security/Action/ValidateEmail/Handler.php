@@ -10,6 +10,7 @@ use Gandalf\Component\Security\Factory\TokenFactory;
 use Gandalf\Component\Security\Hasher\TokenHasher;
 use Gandalf\Component\Security\Persistence\AccountStore;
 use Gandalf\Component\Security\Persistence\TokenStore;
+use Symfony\Component\Clock\ClockInterface;
 
 class Handler implements ActionHandler
 {
@@ -19,6 +20,7 @@ class Handler implements ActionHandler
         private readonly TokenFactory $tokenFactory,
         private readonly TokenStore $tokenStore,
         private readonly TokenHasher $tokenHasher,
+        private readonly ClockInterface $clock,
     ) {
     }
 
@@ -41,7 +43,7 @@ class Handler implements ActionHandler
             ->with(account: $account)
             ->with(intention: $token->intention)
             ->with(tokenHash: $token->tokenHash)
-            ->with(expiresAt: new \DateTimeImmutable())
+            ->with(expiresAt: $this->clock->now())
             ->with(label: $token->label)
             ->with(scopes: $token->scopes)
             ->with(createdAt: $token->createdAt)

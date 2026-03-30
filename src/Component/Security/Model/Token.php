@@ -3,6 +3,7 @@
 namespace Gandalf\Component\Security\Model;
 
 use Cortex\Component\Model\Uuidentifiable;
+use Symfony\Component\Clock\Clock;
 use Symfony\Component\Uid\Uuid;
 
 class Token
@@ -22,9 +23,9 @@ class Token
         $this->uuid = $uuid;
     }
 
-    public function isExpired(): bool
+    public function isExpired(?\DateTimeImmutable $now = null): bool
     {
-        return $this->expiresAt < new \DateTimeImmutable();
+        return $this->expiresAt < ($now ?? Clock::get()->now());
     }
 
     public function matchesScope(string $path): bool

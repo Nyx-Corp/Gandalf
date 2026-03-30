@@ -6,10 +6,8 @@ namespace Gandalf\Tests\Unit\Bridge\Symfony\Bundle\Form;
 
 use Gandalf\Bridge\Symfony\Bundle\Form\LoginType;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Validator\Validation;
 
 #[CoversClass(LoginType::class)]

@@ -78,7 +78,6 @@ class AccountTest extends TestCase
         );
 
         $this->assertSame(['ROLE_CUSTOM'], $account->acl);
-        $this->assertContainsOnly('string', $account->acl);
     }
 
     public function testAclWithStringValues(): void
@@ -107,7 +106,9 @@ class AccountTest extends TestCase
         );
 
         $this->assertCount(3, $account->acl);
-        $this->assertContainsOnly('string', $account->acl);
+        foreach ($account->acl as $role) {
+            $this->assertIsString($role);
+        }
     }
 
     public function testAclIsImmutableAfterConstruction(): void

@@ -3,13 +3,13 @@
 namespace Gandalf\Component\Security\Action\AccountArchive;
 
 use Cortex\Component\Action\ActionHandler;
-use Cortex\Component\Date\DateTimeFactory;
 use Gandalf\Component\Security\Persistence\AccountStore;
+use Symfony\Component\Clock\ClockInterface;
 
 class Handler implements ActionHandler
 {
     public function __construct(
-        private readonly DateTimeFactory $dateTimeFactory,
+        private readonly ClockInterface $clock,
         private readonly AccountStore $store,
     ) {
     }
@@ -19,7 +19,7 @@ class Handler implements ActionHandler
         $account = $command->account;
 
         if ($command->isArchived) {
-            $account->archive($this->dateTimeFactory->now());
+            $account->archive($this->clock->now());
         } else {
             $account->restore();
         }

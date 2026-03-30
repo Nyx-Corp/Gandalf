@@ -28,3 +28,84 @@ token.revoke: Révoquer
 token.revoke.confirm: Révoquer ce token ?
 token.revoke.success.title: Token révoqué
 token.revoke.success.message: Le token a été révoqué avec succès
+
+# Emails — Reset password
+email.reset_password.title: Réinitialisation de votre mot de passe
+email.reset_password.preheader: Cliquez sur le lien pour créer un nouveau mot de passe.
+email.reset_password.heading: Mot de passe oublié ?
+email.reset_password.intro: Vous avez demandé la réinitialisation de votre mot de passe.
+email.reset_password.instruction: Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe.
+email.reset_password.button: Réinitialiser mon mot de passe
+email.reset_password.expires: Ce lien expire le {expires_at}.
+email.reset_password.ignore: Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet email.
+email.reset_password.fallback: Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :
+email.reset_password.reason: Vous recevez cet email suite à une demande de réinitialisation de mot de passe.
+
+# Emails — Reset password request
+email.reset_password_request.title: Réinitialisation du mot de passe
+email.reset_password_request.preheader: Demande de réinitialisation de votre mot de passe
+email.reset_password_request.heading: Réinitialisez votre mot de passe
+email.reset_password_request.intro: Une demande de réinitialisation a été effectuée pour votre compte.
+email.reset_password_request.button: Réinitialiser
+email.reset_password_request.expires: Ce lien expire le {expires_at}.
+email.reset_password_request.reason: Si vous n'avez pas demandé cette action, ignorez cet email.
+
+# Emails — Verify email
+email.verify_email.title: Confirmez votre adresse email
+email.verify_email.preheader: Validation de votre adresse email
+email.verify_email.heading: Confirmez votre email
+email.verify_email.intro: Cliquez sur le bouton ci-dessous pour valider votre adresse email et finaliser votre inscription.
+email.verify_email.button: Confirmer mon email
+email.verify_email.expires: Ce lien expire le {expires_at}.
+email.verify_email.reason: Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email.
+
+# Emails — Welcome
+email.welcome.title: Bienvenue
+email.welcome.preheader: Votre compte est maintenant actif
+email.welcome.heading: Bienvenue {name} !
+email.welcome.intro: Votre compte est actif. Vous pouvez dès maintenant accéder à votre espace.
+email.welcome.button: Se connecter
+email.welcome.reason: Vous recevez cet email car un compte a été créé avec cette adresse.
+
+# Emails — Account locked
+email.account_locked.title: Compte temporairement verrouillé
+email.account_locked.preheader: Mesure de sécurité suite à plusieurs tentatives de connexion
+email.account_locked.heading: Compte verrouillé temporairement
+email.account_locked.intro: Votre compte a été verrouillé par sécurité jusqu'au {expires_at}.
+email.account_locked.button: Réinitialiser mon mot de passe
+email.account_locked.reason: Email de sécurité envoyé automatiquement.
+
+# Emails — Password changed
+email.password_changed.title: Mot de passe modifié
+email.password_changed.preheader: Confirmation de modification du mot de passe
+email.password_changed.heading: Votre mot de passe a été modifié
+email.password_changed.intro: La modification a bien été prise en compte.
+email.password_changed.warning: Si vous n'êtes pas à l'origine de ce changement, contactez immédiatement le support.
+email.password_changed.reason: Email de sécurité envoyé automatiquement.
+
+# Emails — Account created
+email.account_created.title: Votre compte a été créé
+email.account_created.preheader: Bienvenue, votre compte est prêt
+email.account_created.heading: Votre compte a été créé
+email.account_created.intro: Un compte a été créé pour vous. Voici vos informations de connexion.
+email.account_created.account_details: Détails du compte
+email.account_created.email_label: Email
+email.account_created.organisation_label: Organisation
+email.account_created.button: Se connecter
+email.account_created.password_info: Utilisez le lien « Mot de passe oublié » lors de votre première connexion pour définir votre mot de passe.
+email.account_created.help: Une question ? Contactez le support.
+email.account_created.reason: Vous recevez cet email car un compte a été créé avec cette adresse.
+
+# Emails — Password reset (admin-initiated)
+email.password_reset_admin.title: Réinitialisation de votre mot de passe
+email.password_reset_admin.preheader: Votre mot de passe a été réinitialisé
+email.password_reset_admin.heading: Mot de passe réinitialisé
+email.password_reset_admin.intro: Votre mot de passe a été réinitialisé par un administrateur.
+email.password_reset_admin.request_details: Détails de la demande
+email.password_reset_admin.email_label: Email
+email.password_reset_admin.token_label: Code de vérification
+email.password_reset_admin.organisation_label: Organisation
+email.password_reset_admin.button: Changer mon mot de passe
+email.password_reset_admin.expiry_info: Ce lien a une durée de validité limitée.
+email.password_reset_admin.help: Une question ? Contactez le support.
+email.password_reset_admin.reason: Email transactionnel envoyé automatiquement.

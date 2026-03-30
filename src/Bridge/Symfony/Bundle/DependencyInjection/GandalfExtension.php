@@ -18,12 +18,18 @@ class GandalfExtension extends Extension implements PrependExtensionInterface
         $configs = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $configs);
 
+        $globals = [];
+
+        if ($config['email']['enabled']) {
+            $globals['gandalf_email_layout'] = $config['email']['layout'];
+        }
+
         if ($config['admin']['enabled']) {
-            $container->prependExtensionConfig('twig', [
-                'globals' => [
-                    'gandalf_admin_layout' => $config['admin']['layout'],
-                ],
-            ]);
+            $globals['gandalf_admin_layout'] = $config['admin']['layout'];
+        }
+
+        if ($globals) {
+            $container->prependExtensionConfig('twig', ['globals' => $globals]);
         }
     }
 
