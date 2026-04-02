@@ -51,5 +51,11 @@ class GandalfExtension extends Extension implements PrependExtensionInterface
         if ($config['admin']['enabled']) {
             $container->setParameter('gandalf.admin.roles', $config['admin']['roles']);
         }
+
+        // Credentials encryption key
+        $container->setParameter(
+            'gandalf.credentials.encryption_key',
+            $config['credentials']['encryption_key'],
+        );
     }
 }

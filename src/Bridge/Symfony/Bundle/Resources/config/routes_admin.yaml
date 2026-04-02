@@ -23,3 +23,17 @@ gandalf_token_list:
     methods: [GET, POST]
     options:
         template: '@_gandalf/admin/token/index.html.twig'
+
+gandalf_credential_list:
+    path: /security/credentials
+    controller: Gandalf\Bridge\Symfony\Bundle\Controller\CredentialListAction
+    methods: GET
+    options:
+        template: '@_gandalf/admin/credential/index.html.twig'
+
+gandalf_credential_edit:
+    path: /security/credentials/{uuid}/edit
+    controller: Gandalf\Bridge\Symfony\Bundle\Controller\CredentialEditAction
+    methods: [GET, POST]
+    options:
+        template: '@_gandalf/admin/credential/edit.html.twig'

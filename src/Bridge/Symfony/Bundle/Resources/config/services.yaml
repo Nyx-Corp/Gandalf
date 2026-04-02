@@ -36,3 +36,8 @@ services:
     # Interface → Implementation alias
     Gandalf\Component\Security\Hasher\PasswordHasherInterface:
         alias: Gandalf\Bridge\Symfony\Security\SymfonyPasswordHasher
+
+    # Credential vault — encryption key from env
+    Gandalf\Component\Security\Service\CredentialVault:
+        arguments:
+            $encryptionKey: '%gandalf.credentials.encryption_key%'

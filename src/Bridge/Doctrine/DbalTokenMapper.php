@@ -9,15 +9,11 @@ use Cortex\Bridge\Doctrine\DbalMappingConfiguration;
 use Cortex\Bridge\Doctrine\DbalModelAdapterTrait;
 use Cortex\Bridge\Doctrine\JoinDefinition;
 use Cortex\Bridge\Symfony\Model\Attribute\Middleware;
-use Cortex\Component\Mapper\ArrayMapper;
-use Cortex\Component\Mapper\Relation;
-use Cortex\Component\Mapper\Strategy;
-use Cortex\Component\Mapper\Value;
 use Cortex\Component\Model\ModelMiddleware;
 use Cortex\Component\Model\Scope;
 use Gandalf\Component\Security\Factory\AccountFactory;
 use Gandalf\Component\Security\Model\Token;
-use Symfony\Component\Uid\Uuid;
+use Gandalf\Component\Security\Representation\TokenRepresentation;
 
 /**
  * Maps the `security_token` table to the Gandalf Token model.
@@ -33,6 +29,7 @@ class DbalTokenMapper implements ModelMiddleware
 
     public function __construct(
         DbalBridge $dbalBridge,
+        TokenRepresentation $representation,
         private readonly AccountFactory $accountFactory,
         private readonly DbalAccountMapper $accountMapper,
     ) {
@@ -45,22 +42,8 @@ class DbalTokenMapper implements ModelMiddleware
                     joinConfig: $this->accountMapper->getConfiguration(),
                 ),
             ],
-            modelToTableMapper: new ArrayMapper([
-                'account' => Relation::toUuid('account_uuid'),
-                'expiresAt' => Value::Date,
-                'createdAt' => Value::Date,
-                'scopes' => Value::Json,
-            ]),
-            tableToModelMapper: new ArrayMapper(
-                mapping: [
-                    'uuid' => fn (string $uuid) => new Uuid($uuid),
-                    'account_uuid' => Relation::toModel('account'),
-                    'expires_at' => Value::Date,
-                    'created_at' => Value::Date,
-                    'scopes' => Value::Json,
-                ],
-                format: Strategy::AutoMapCamel,
-            ),
+            modelToTableMapper: $representation->writer('store'),
+            tableToModelMapper: $representation->reader('store'),
             modelClass: Token::class,
         ));
     }

@@ -109,3 +109,23 @@ email.password_reset_admin.button: Changer mon mot de passe
 email.password_reset_admin.expiry_info: Ce lien a une durée de validité limitée.
 email.password_reset_admin.help: Une question ? Contactez le support.
 email.password_reset_admin.reason: Email transactionnel envoyé automatiquement.
+
+# Credentials
+credential.list.title: Credentials
+credential.list.empty: Aucun credential configuré
+credential.edit.title: Modifier le credential
+credential.edit.section.info: Informations
+credential.edit.success.title: Credential mis à jour
+credential.edit.success.message: Le credential « {name} » a été modifié
+credential.expires_at: "Expire le {date}"
+credential.expired: Expiré
+credential.fields.name.label: Nom
+credential.fields.name.help: Identifiant unique (ex. meta_whiterabbit, discord_webhook_annonces)
+credential.fields.provider.label: Provider
+credential.fields.data.label: Données (JSON)
+credential.fields.data.help: "Données chiffrées : access_token, webhook_url, etc."
+credential.provider.meta: Meta (Instagram / Facebook)
+credential.provider.google: Google
+credential.provider.discord: Discord
+credential.provider.brevo: Brevo
+credential.provider.custom: Personnalisé
