@@ -1,5 +1,82 @@
 # Upgrade guide
 
+## Cortex 2.1 → 2.2: `DateTimeFactory` removed
+
+Cortex 2.2 removed `Cortex\Component\Date\DateTimeFactory` (along with `Cortex\ValueObject\CurrentDateFactory` and `Cortex\ValueObject\CurrentDate`) in favor of `Psr\Clock\ClockInterface` + `Symfony\Component\Clock`. See [Cortex `UPGRADE-2.2.md`](../Cortex/UPGRADE-2.2.md) for the full context.
+
+Any Gandalf action handler that injected `DateTimeFactory` must now inject `ClockInterface` instead, and call `$this->clock->now()` where it used to call `$this->dateTimeFactory->now()`. The signature change is a breaking change for the DI container: without the fix, the service compiler errors with:
+
+```
+Cannot autowire service "Gandalf\Component\Security\Action\…\Handler":
+argument "$dateTimeFactory" of method "__construct()" has type
+"Cortex\Component\Date\DateTimeFactory" but this class was not found.
+```
+
+### Before
+
+```php
+use Cortex\Component\Date\DateTimeFactory;
+
+class Handler implements ActionHandler
+{
+    public function __construct(
+        private readonly DateTimeFactory $dateTimeFactory,
+        private readonly SomeStore $store,
+    ) {}
+
+    public function __invoke(Command $command): Response
+    {
+        $model->archive($this->dateTimeFactory->now());
+        // …
+    }
+}
+```
+
+### After
+
+```php
+use Symfony\Component\Clock\ClockInterface;
+
+class Handler implements ActionHandler
+{
+    public function __construct(
+        private readonly ClockInterface $clock,
+        private readonly SomeStore $store,
+    ) {}
+
+    public function __invoke(Command $command): Response
+    {
+        $model->archive($this->clock->now());
+        // …
+    }
+}
+```
+
+### Host project config
+
+Host projects that already bumped Cortex to 2.2 have `symfony/clock` in their `composer.json` and the `ClockInterface` service is auto-wired — no extra DI config needed. In tests that need a fixed clock, use `Symfony\Bundle\FrameworkBundle\Test\ClockSensitiveTrait`.
+
+### Credential vault env variable
+
+Gandalf's `CredentialVault` (added alongside the Credential domain model) requires a new env variable:
+
+```
+# .env
+GANDALF_CREDENTIALS_KEY=
+
+# .env.local (dev) and .env.test (tests) — base64-encoded 32-byte sodium_crypto_secretbox key
+GANDALF_CREDENTIALS_KEY="<base64 key>"
+```
+
+Generate a key with:
+```bash
+php -r 'echo base64_encode(sodium_crypto_secretbox_keygen()) . PHP_EOL;'
+```
+
+**Watch out**: `.env.local` is NOT loaded by Symfony in the `test` environment — if you only drop the key in `.env.local`, the test suite fails with `EnvNotFoundException: Environment variable not found: "GANDALF_CREDENTIALS_KEY"` and any request to `/login` in tests returns 500. Put the key in `.env.test` as well (tests use a deterministic fixed key, not a production secret).
+
+---
+
 ## From project-owned login templates to `@_gandalf`
 
 Gandalf now ships the login flow (`LoginType`, `LoginController`, `/login` route, Twig templates) under the `@_gandalf/security/*` namespace. Projects that previously carried their own `templates/admin/security/{_layout,_form_theme,login}.html.twig` with hard-coded Tailwind classes must migrate.

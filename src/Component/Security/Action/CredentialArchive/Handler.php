@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Gandalf\Component\Security\Action\CredentialArchive;
 
 use Cortex\Component\Action\ActionHandler;
-use Cortex\Component\Date\DateTimeFactory;
 use Gandalf\Component\Security\Persistence\CredentialStore;
+use Symfony\Component\Clock\ClockInterface;
 
 class Handler implements ActionHandler
 {
     public function __construct(
-        private readonly DateTimeFactory $dateTimeFactory,
+        private readonly ClockInterface $clock,
         private readonly CredentialStore $store,
     ) {
     }
@@ -21,7 +21,7 @@ class Handler implements ActionHandler
         $credential = $command->credential;
 
         if ($command->isArchived) {
-            $credential->archive($this->dateTimeFactory->now());
+            $credential->archive($this->clock->now());
         } else {
             $credential->restore();
         }
