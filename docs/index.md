@@ -144,6 +144,7 @@ All of the following are registered automatically — no `services.yaml` needed:
 
 ## Documentation
 
-- [Templates](templates.md) — the `@_gandalf` template system
+- [Templates](templates.md) — the `@_gandalf` template system (**read the ⚠️ warnings** about the fragment layout and the form-theme trap)
 - [Security](security.md) — API auth, rate limiting, CORS, MCP access control
 - [Admin module](admin.md) — account & token management UI
+- [Upgrade guide](../UPGRADE.md) — migrating a project from its own login templates to `@_gandalf/security/*`
